@@ -3,9 +3,6 @@ using System.Text;
 
 namespace TPPOO
 {
-	/// <summary>
-	/// Direccion postal. Se usa para el cliente, el origen y la entrega.
-	/// </summary>
 	public class Direccion
 	{
 		public string Calle { get; private set; }

@@ -45,7 +45,6 @@ namespace TPPOO
 			Console.WriteLine();
 		}
 
-		// ---------------- Opciones del menu ----------------
 
 		static void GenerarEnvio()
 		{
@@ -85,7 +84,7 @@ namespace TPPOO
 				Console.WriteLine("Envio generado:");
 				Console.WriteLine(envio);
 			}
-			catch (EnvioInvalidoException ex) // peso, volumen o destino invalido
+			catch (EnvioInvalidoException ex)
 			{
 				Console.WriteLine();
 				Console.WriteLine("No se genero el envio: " + ex.Message);
@@ -180,7 +179,6 @@ namespace TPPOO
 			}
 		}
 
-		// ---------------- Carga de datos ----------------
 
 		static Cliente LeerCliente(string dni)
 		{
@@ -194,32 +192,11 @@ namespace TPPOO
 
 		static Paquete LeerPaquete()
 		{
-			Console.WriteLine("Tipo de paquete:");
-			Console.WriteLine("1. Comun (hasta 5 kg y 3 dm3)");
-			Console.WriteLine("2. Fragil (hasta 5 kg y 3 dm3, recargo 50%)");
-			Console.WriteLine("3. Pesado (hasta 20 kg y 10 dm3, precio x2)");
-			Console.WriteLine("4. Internacional (hasta 5 kg y 3 dm3, entrega en otro pais)");
-			string tipo;
-			while (true)
-			{
-				tipo = Leer("Opcion: ");
-				if (tipo == "1" || tipo == "2" || tipo == "3" || tipo == "4")
-					break;
-				Console.WriteLine("Opcion invalida.");
-			}
-
 			decimal peso = LeerDecimal("Peso (kg): ");
 			decimal ancho = LeerDecimal("Ancho (cm): ");
 			decimal alto = LeerDecimal("Alto (cm): ");
 			decimal profundidad = LeerDecimal("Profundidad (cm): ");
-
-			switch (tipo)
-			{
-				case "2": return new PaqueteFragil(peso, ancho, alto, profundidad);
-				case "3": return new PaquetePesado(peso, ancho, alto, profundidad);
-				case "4": return new PaqueteInternacional(peso, ancho, alto, profundidad);
-				default: return new PaqueteComun(peso, ancho, alto, profundidad);
-			}
+			return new Paquete(peso, ancho, alto, profundidad);
 		}
 
 		static Direccion LeerDireccion(string titulo)
@@ -235,14 +212,13 @@ namespace TPPOO
 			return new Direccion(calle, numero, piso, depto, cp, ciudad, pais);
 		}
 
-		// ---------------- Lectura por consola ----------------
 
 		static string Leer(string mensaje)
 		{
 			Console.Write(mensaje);
 			string s = Console.ReadLine();
 			if (s == null)
-				Environment.Exit(0); // fin de la entrada
+				Environment.Exit(0);
 			return s.Trim();
 		}
 
@@ -272,7 +248,6 @@ namespace TPPOO
 		{
 			while (true)
 			{
-				// Acepta coma o punto como separador decimal
 				string s = Leer(mensaje).Replace(',', '.');
 				decimal d;
 				if (decimal.TryParse(s, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out d) && d > 0)

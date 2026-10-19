@@ -3,10 +3,6 @@ using System.Text;
 
 namespace TPPOO
 {
-	/// <summary>
-	/// Envio del correo. Tiene un Paquete, que valida las condiciones
-	/// y calcula el importe segun su tipo.
-	/// </summary>
 	public class Envio
 	{
 		public int NroEnvio { get; private set; }
@@ -21,8 +17,7 @@ namespace TPPOO
 		public Envio(int nroEnvio, Cliente cliente, DateTime fecha, Paquete paquete,
 		             Direccion origen, Direccion entrega)
 		{
-			// Si el paquete no cumple las condiciones lanza excepcion y el envio no se crea
-			paquete.Validar(origen, entrega);
+			paquete.Validar();
 
 			NroEnvio = nroEnvio;
 			Cliente = cliente;

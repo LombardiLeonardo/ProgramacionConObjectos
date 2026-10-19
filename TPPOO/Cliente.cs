@@ -2,9 +2,6 @@ using System;
 
 namespace TPPOO
 {
-	/// <summary>
-	/// Cliente del correo. Su direccion puede ser distinta a la de entrega.
-	/// </summary>
 	public class Cliente
 	{
 		public string NombreApellido { get; private set; }
