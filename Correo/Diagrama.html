@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagrama de clases - Correo</title>
+<style>
+  :root {
+    --bg: #ffffff; --card: #f7f6f2; --text: #1f1e1c; --muted: #5f5e5a; --line: #888780; --border: #d3d1c7;
+    --p-fill: #EEEDFE; --p-stroke: #534AB7; --p-text: #3C3489; --p-sub: #534AB7;
+    --c-fill: #FAECE7; --c-stroke: #993C1D; --c-text: #712B13; --c-sub: #993C1D;
+    --g-fill: #F1EFE8; --g-stroke: #5F5E5A; --g-text: #2C2C2A; --g-sub: #5F5E5A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1b19; --card: #262523; --text: #ecebe4; --muted: #b4b2a9; --line: #9c9a92; --border: #444441;
+      --p-fill: #3C3489; --p-stroke: #AFA9EC; --p-text: #CECBF6; --p-sub: #AFA9EC;
+      --c-fill: #712B13; --c-stroke: #F0997B; --c-text: #F5C4B3; --c-sub: #F0997B;
+      --g-fill: #444441; --g-stroke: #B4B2A9; --g-text: #D3D1C7; --g-sub: #B4B2A9;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Segoe UI", system-ui, sans-serif; line-height: 1.6; }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 16px 56px; }
+  h1 { font-size: 24px; font-weight: 500; margin: 0 0 4px; }
+  h2 { font-size: 18px; font-weight: 500; margin: 40px 0 12px; }
+  p.sub { margin: 0 0 24px; color: var(--muted); }
+  .diagram { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+  svg { display: block; width: 100%; height: auto; }
+  svg text { fill: var(--text); font-family: "Segoe UI", system-ui, sans-serif; }
+  .th { font-size: 14px; font-weight: 500; }
+  .ts { font-size: 12px; }
+  .rule { stroke-width: 0.5; }
+  .link { stroke: var(--line); stroke-width: 1; fill: none; }
+  .dash { stroke-dasharray: 4 3; }
+  .diamond { fill: var(--line); stroke: var(--line); stroke-width: 0.5; }
+  .plain > rect { fill: var(--g-fill); stroke: var(--g-stroke); stroke-width: 0.5; }
+  .plain text { fill: var(--g-text); }
+  .plain line { stroke: var(--g-stroke); }
+  .purple > rect { fill: var(--p-fill); stroke: var(--p-stroke); stroke-width: 0.5; }
+  .purple text { fill: var(--p-text); }
+  .purple line { stroke: var(--p-stroke); }
+  .coral > rect { fill: var(--c-fill); stroke: var(--c-stroke); stroke-width: 0.5; stroke-dasharray: 5 3; }
+  .coral text { fill: var(--c-text); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+  .item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; }
+  .item svg { width: 96px; flex: none; }
+  .item h3 { font-size: 15px; font-weight: 500; margin: 0 0 2px; }
+  .item p { margin: 0; font-size: 14px; color: var(--muted); }
+  code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; }
+  .classes { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+  .cls { border-radius: 12px; padding: 14px 16px; border: 1px solid; }
+  .cls h3 { font-size: 15px; font-weight: 500; margin: 0 0 4px; }
+  .cls p { margin: 0; font-size: 14px; }
+  .cls.p { background: var(--p-fill); border-color: var(--p-stroke); color: var(--p-text); }
+  .cls.c { background: var(--c-fill); border-color: var(--c-stroke); color: var(--c-text); }
+  .cls.g { background: var(--g-fill); border-color: var(--g-stroke); color: var(--g-text); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Diagrama de clases: sistema de correo</h1>
+  <p class="sub">Clases del proyecto Correo, sus atributos, métodos y cómo se relacionan.</p>
+
+  <div class="diagram">
+  <svg viewBox="0 0 680 694" role="img" aria-labelledby="t d">
+    <title id="t">Diagrama de clases del sistema de correo</title>
+    <desc id="d">Program usa Cliente y Envio. Cliente se compone de varios Envio y de una Direccion. Cada Envio se compone de dos Direccion y puede lanzar excepciones propias.</desc>
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <g class="plain">
+      <rect x="40" y="20" width="600" height="72" rx="4"/>
+      <text class="th" x="340" y="34" text-anchor="middle" dominant-baseline="central">Program</text>
+      <line class="rule" x1="40" y1="46" x2="640" y2="46"/>
+      <text class="ts" x="340" y="60" text-anchor="middle" dominant-baseline="central">+ Main(args)     + CargarDireccion() : Direccion</text>
+      <text class="ts" x="340" y="78" text-anchor="middle" dominant-baseline="central">+ GuardarDatos(listaClientes)     + CargarDatos(listaClientes)</text>
+    </g>
+
+    <line class="link dash" x1="165" y1="92" x2="165" y2="127" marker-end="url(#arrow)"/>
+    <text class="ts" x="173" y="110" dominant-baseline="central">usa</text>
+    <line class="link dash" x1="515" y1="92" x2="515" y2="127" marker-end="url(#arrow)"/>
+    <text class="ts" x="523" y="110" dominant-baseline="central">usa</text>
+
+    <g class="purple">
+      <rect x="40" y="130" width="250" height="218" rx="4"/>
+      <text class="th" x="165" y="144" text-anchor="middle" dominant-baseline="central">Cliente</text>
+      <line class="rule" x1="40" y1="158" x2="290" y2="158"/>
+      <text class="ts" x="52" y="172" dominant-baseline="central">+ NombreApellido : string</text>
+      <text class="ts" x="52" y="189" dominant-baseline="central">+ DNI : int</text>
+      <text class="ts" x="52" y="206" dominant-baseline="central">+ Cuit : string</text>
+      <text class="ts" x="52" y="223" dominant-baseline="central">+ Email : string</text>
+      <text class="ts" x="52" y="240" dominant-baseline="central">+ Celular : string</text>
+      <text class="ts" x="52" y="257" dominant-baseline="central">+ DireccionCliente : Direccion</text>
+      <text class="ts" x="52" y="274" dominant-baseline="central">+ Envios : IEnumerable&lt;Envio&gt;</text>
+      <text class="ts" x="52" y="291" dominant-baseline="central">- envios : List&lt;Envio&gt;</text>
+      <line class="rule" x1="40" y1="304" x2="290" y2="304"/>
+      <text class="ts" x="52" y="318" dominant-baseline="central">+ AgregarEnvio(nuevoEnvio)</text>
+      <text class="ts" x="52" y="335" dominant-baseline="central">+ MostrarDatos()</text>
+    </g>
+
+    <g class="purple">
+      <rect x="390" y="130" width="250" height="303" rx="4"/>
+      <text class="th" x="515" y="144" text-anchor="middle" dominant-baseline="central">Envio</text>
+      <line class="rule" x1="390" y1="158" x2="640" y2="158"/>
+      <text class="ts" x="402" y="172" dominant-baseline="central">+ Cliente : Cliente</text>
+      <text class="ts" x="402" y="189" dominant-baseline="central">+ Fecha : DateTime</text>
+      <text class="ts" x="402" y="206" dominant-baseline="central">+ NroEnvio : int</text>
+      <text class="ts" x="402" y="223" dominant-baseline="central">+ Peso : double</text>
+      <text class="ts" x="402" y="240" dominant-baseline="central">+ Ancho : double</text>
+      <text class="ts" x="402" y="257" dominant-baseline="central">+ Alto : double</text>
+      <text class="ts" x="402" y="274" dominant-baseline="central">+ Profundidad : double</text>
+      <text class="ts" x="402" y="291" dominant-baseline="central">+ DireccionOrigen : Direccion</text>
+      <text class="ts" x="402" y="308" dominant-baseline="central">+ DireccionEntrega : Direccion</text>
+      <text class="ts" x="402" y="325" dominant-baseline="central">+ Importe : double</text>
+      <text class="ts" x="402" y="342" dominant-baseline="central">+ Estado : string</text>
+      <line class="rule" x1="390" y1="355" x2="640" y2="355"/>
+      <text class="ts" x="402" y="369" dominant-baseline="central">+ ValidarMedidas(...) {static}</text>
+      <text class="ts" x="402" y="386" dominant-baseline="central">- CalcularImporte(...) : double</text>
+      <text class="ts" x="402" y="403" dominant-baseline="central">+ ActualizarEstado(estado)</text>
+      <text class="ts" x="402" y="420" dominant-baseline="central">+ Mostrar()</text>
+    </g>
+
+    <line class="link" x1="314" y1="210" x2="390" y2="210"/>
+    <polygon class="diamond" points="290,210 302,204 314,210 302,216"/>
+    <text class="ts" x="296" y="196" dominant-baseline="central">1</text>
+    <text class="ts" x="384" y="196" text-anchor="end" dominant-baseline="central">0..*</text>
+    <text class="ts" x="352" y="228" text-anchor="middle" dominant-baseline="central">envios</text>
+
+    <line class="link" x1="165" y1="372" x2="165" y2="468"/>
+    <polygon class="diamond" points="165,348 159,360 165,372 171,360"/>
+    <text class="ts" x="173" y="456" dominant-baseline="central">1</text>
+
+    <path class="link" d="M366 395 L265 395 L265 468"/>
+    <polygon class="diamond" points="390,395 378,389 366,395 378,401"/>
+    <text class="ts" x="273" y="456" dominant-baseline="central">2</text>
+    <text class="ts" x="273" y="412" dominant-baseline="central">origen y entrega</text>
+
+    <g class="purple">
+      <rect x="40" y="470" width="250" height="184" rx="4"/>
+      <text class="th" x="165" y="484" text-anchor="middle" dominant-baseline="central">Direccion</text>
+      <line class="rule" x1="40" y1="498" x2="290" y2="498"/>
+      <text class="ts" x="52" y="512" dominant-baseline="central">+ Calle : string</text>
+      <text class="ts" x="52" y="529" dominant-baseline="central">+ Nro : int</text>
+      <text class="ts" x="52" y="546" dominant-baseline="central">+ Piso : string</text>
+      <text class="ts" x="52" y="563" dominant-baseline="central">+ Dpto : string</text>
+      <text class="ts" x="52" y="580" dominant-baseline="central">+ CodigoPostal : string</text>
+      <text class="ts" x="52" y="597" dominant-baseline="central">+ Ciudad : string</text>
+      <text class="ts" x="52" y="614" dominant-baseline="central">+ Pais : string</text>
+      <line class="rule" x1="40" y1="627" x2="290" y2="627"/>
+      <text class="ts" x="52" y="641" dominant-baseline="central">+ Mostrar()</text>
+    </g>
+
+    <line class="link dash" x1="515" y1="433" x2="515" y2="467" marker-end="url(#arrow)"/>
+    <text class="ts" x="523" y="451" dominant-baseline="central">lanza</text>
+
+    <g class="coral">
+      <rect x="390" y="470" width="250" height="125" rx="4"/>
+      <text class="th" x="515" y="488" text-anchor="middle" dominant-baseline="central">Excepciones propias</text>
+      <text class="ts" x="515" y="506" text-anchor="middle" dominant-baseline="central">heredan de Exception</text>
+      <text class="ts" x="515" y="528" text-anchor="middle" dominant-baseline="central">PesoMaximoException</text>
+      <text class="ts" x="515" y="545" text-anchor="middle" dominant-baseline="central">VolumenMaximoException</text>
+      <text class="ts" x="515" y="562" text-anchor="middle" dominant-baseline="central">MedidaInvalidaException</text>
+      <text class="ts" x="515" y="579" text-anchor="middle" dominant-baseline="central">EstadoInvalidoException</text>
+    </g>
+  </svg>
+  </div>
+
+  <h2>Qué significa cada símbolo</h2>
+  <div class="grid">
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <g class="purple"><rect x="4" y="4" width="88" height="56" rx="3"/>
+        <text class="ts" x="48" y="14" text-anchor="middle" dominant-baseline="central">Nombre</text>
+        <line class="rule" x1="4" y1="22" x2="92" y2="22"/>
+        <text class="ts" x="10" y="33" dominant-baseline="central">atributos</text>
+        <line class="rule" x1="4" y1="42" x2="92" y2="42"/>
+        <text class="ts" x="10" y="51" dominant-baseline="central">métodos</text></g>
+      </svg>
+      <div><h3>Caja de clase</h3><p>Tiene tres partes: arriba el nombre de la clase, en el medio sus atributos (los datos que guarda) y abajo sus métodos (lo que sabe hacer).</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <text class="th" x="8" y="20" dominant-baseline="central">+</text><text class="ts" x="24" y="20" dominant-baseline="central">público</text>
+        <text class="th" x="8" y="44" dominant-baseline="central">-</text><text class="ts" x="24" y="44" dominant-baseline="central">privado</text>
+      </svg>
+      <div><h3><code>+</code> y <code>-</code></h3><p><code>+</code> se puede usar desde otras clases. <code>-</code> solo se usa dentro de la propia clase. Un atributo con <code>private set</code> se marca <code>+</code> porque se puede leer desde afuera, aunque solo la clase lo modifique.</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <text class="ts" x="4" y="22" dominant-baseline="central">+ DNI : int</text>
+        <text class="ts" x="4" y="44" dominant-baseline="central">+ Mostrar()</text>
+      </svg>
+      <div><h3><code>nombre : tipo</code></h3><p>Después de los dos puntos va el tipo del atributo (<code>int</code>, <code>string</code>, <code>double</code>, <code>Direccion</code>...). En un método, el tipo es lo que devuelve. Si no hay <code>: tipo</code>, no devuelve nada (<code>void</code>).</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <polygon class="diamond" points="8,32 20,26 32,32 20,38"/>
+        <line class="link" x1="32" y1="32" x2="90" y2="32"/>
+      </svg>
+      <div><h3>Rombo lleno: composición</h3><p>La clase que está del lado del rombo <em>contiene</em> a la otra. Un <code>Cliente</code> contiene sus <code>Envio</code>, y cada <code>Envio</code> contiene sus <code>Direccion</code>.</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <text class="ts" x="4" y="20" dominant-baseline="central">1</text>
+        <text class="ts" x="4" y="38" dominant-baseline="central">0..*</text>
+        <text class="ts" x="4" y="56" dominant-baseline="central">2</text>
+      </svg>
+      <div><h3>Números: multiplicidad</h3><p>Cuántos objetos hay en ese extremo. <code>1</code> es exactamente uno. <code>0..*</code> es de cero a muchos (un cliente puede no tener envíos o tener varios). <code>2</code> son dos: origen y entrega.</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <line class="link dash" x1="8" y1="32" x2="88" y2="32" marker-end="url(#a2)"/>
+      </svg>
+      <div><h3>Flecha punteada: dependencia</h3><p>La clase de donde sale la flecha <em>usa</em> a la otra, pero no la guarda como atributo. <code>Program</code> usa <code>Cliente</code> y <code>Envio</code>; <code>Envio</code> lanza las excepciones.</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <text class="ts" x="48" y="22" text-anchor="middle" dominant-baseline="central">{static}</text>
+        <text class="ts" x="48" y="44" text-anchor="middle" dominant-baseline="central">( ... )</text>
+      </svg>
+      <div><h3><code>{static}</code> y <code>(...)</code></h3><p><code>{static}</code> marca un método de la clase, que se llama sin crear un objeto (<code>Envio.ValidarMedidas(...)</code>). Los puntos suspensivos <code>(...)</code> indican que se omitieron los parámetros para que entre en el dibujo.</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <g class="purple"><rect x="4" y="6" width="26" height="22" rx="3"/></g>
+        <g class="coral"><rect x="35" y="6" width="26" height="22" rx="3"/></g>
+        <g class="plain"><rect x="66" y="6" width="26" height="22" rx="3"/></g>
+      </svg>
+      <div><h3>Colores</h3><p>Violeta: clases del modelo (<code>Cliente</code>, <code>Envio</code>, <code>Direccion</code>). Coral con borde punteado: excepciones propias. Gris: <code>Program</code>, que arma el menú y maneja los archivos.</p></div>
+    </div>
+
+    <div class="item">
+      <svg viewBox="0 0 96 64" aria-hidden="true">
+        <text class="ts" x="4" y="14" dominant-baseline="central">List&lt;Envio&gt;</text>
+        <text class="ts" x="4" y="34" dominant-baseline="central">IEnumerable</text>
+        <text class="ts" x="4" y="50" dominant-baseline="central">&lt;Envio&gt;</text>
+      </svg>
+      <div><h3><code>List&lt;Envio&gt;</code> e <code>IEnumerable&lt;Envio&gt;</code></h3><p><code>List</code> es la lista de envíos que guarda el cliente por dentro (privada). <code>IEnumerable</code> es la forma de solo lectura con que se la muestra: se puede recorrer con <code>foreach</code>, pero se agrega solo con <code>AgregarEnvio()</code>.</p></div>
+    </div>
+
+  </div>
+
+  <h2>Qué hace cada clase</h2>
+  <div class="classes">
+    <div class="cls g"><h3>Program</h3><p>Muestra el menú, pide los datos por consola y llama a las otras clases. También guarda y carga los archivos <code>Clientes.csv</code> y <code>Envios.csv</code>.</p></div>
+    <div class="cls p"><h3>Cliente</h3><p>Guarda los datos personales, su dirección y la lista de sus envíos.</p></div>
+    <div class="cls p"><h3>Envio</h3><p>Guarda fecha, peso, medidas (en cm), direcciones, estado e importe. Valida el peso y el volumen y calcula el precio.</p></div>
+    <div class="cls p"><h3>Direccion</h3><p>Agrupa los siete datos de una dirección. Se usa en el cliente y en el origen y la entrega de cada envío.</p></div>
+    <div class="cls c"><h3>Excepciones propias</h3><p>Avisan de errores concretos: peso o volumen excedidos, medidas menores o iguales a 0 y estados que no existen.</p></div>
+  </div>
+</main>
+</body>
+</html>

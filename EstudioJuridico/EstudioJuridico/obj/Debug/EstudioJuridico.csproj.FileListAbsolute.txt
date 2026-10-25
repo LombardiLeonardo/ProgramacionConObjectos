@@ -1,5 +1,0 @@
-C:\Users\leolo\OneDrive\Desktop\TPI\EstudioJuridico\EstudioJuridico\obj\Debug\EstudioJuridico.csprojResolveAssemblyReference.cache
-C:\Users\leolo\OneDrive\Desktop\TPI\EstudioJuridico\EstudioJuridico\bin\Debug\EstudioJuridico.exe
-C:\Users\leolo\OneDrive\Desktop\TPI\EstudioJuridico\EstudioJuridico\bin\Debug\EstudioJuridico.pdb
-C:\Users\leolo\OneDrive\Desktop\TPI\EstudioJuridico\EstudioJuridico\obj\Debug\EstudioJuridico.exe
-C:\Users\leolo\OneDrive\Desktop\TPI\EstudioJuridico\EstudioJuridico\obj\Debug\EstudioJuridico.pdb
